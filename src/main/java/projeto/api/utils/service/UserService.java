@@ -7,11 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import projeto.api.utils.DTO.LoginDTO;
+import projeto.api.utils.DTO.TokenResponseDTO;
+import projeto.api.utils.configuration.auth.TokenService;
 import projeto.api.utils.exceptions.EmailAlreadyUsedException;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.UserRepository;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
+
+    private final TokenService tokenService;
 
     public User create(User user) {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
@@ -35,9 +38,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Object login(LoginDTO loginDTO) {
+    public TokenResponseDTO login(LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordToken = new UsernamePasswordAuthenticationToken(loginDTO,loginDTO,null);
         Authentication authentication = authenticationManager.authenticate(usernamePasswordToken);
-        return authentication;
+        String token = tokenService.generate(authentication);
+        return new TokenResponseDTO("Bearer",token);
     }
 }

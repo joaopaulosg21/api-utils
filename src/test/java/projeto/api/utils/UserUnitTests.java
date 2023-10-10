@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import projeto.api.utils.configuration.auth.TokenService;
 import projeto.api.utils.exceptions.EmailAlreadyUsedException;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.UserRepository;
@@ -27,10 +28,12 @@ public class UserUnitTests {
     private PasswordEncoder passwordEncoder;
     @Mock
     private AuthenticationManager authenticationManager;
+    @Mock
+    private TokenService tokenService;
 
     @BeforeEach
     void setup() {
-        this.userService = new UserService(userRepository,passwordEncoder,authenticationManager);
+        this.userService = new UserService(userRepository,passwordEncoder,authenticationManager,tokenService);
     }
 
     @Test
