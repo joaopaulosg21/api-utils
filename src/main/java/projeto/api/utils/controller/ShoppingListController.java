@@ -28,4 +28,9 @@ public class ShoppingListController {
     public ResponseEntity<List<ShoppingList>> findAllPublic() {
         return ResponseEntity.ok(shoppingListService.findAllPublic());
     }
+
+    @GetMapping("find/private")
+    public ResponseEntity<List<ShoppingList>> findAllPrivate(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(shoppingListService.findAllPrivate(user));
+    }
 }

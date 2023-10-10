@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ShoppingListRepository extends JpaRepository<ShoppingList,String> {
     List<ShoppingList> findAllByIsPublic(boolean b);
+
+    List<ShoppingList> findAllByIsPublicAndUserId(boolean b, String userId);
 }

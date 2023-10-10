@@ -21,4 +21,8 @@ public class ShoppingListService {
     public List<ShoppingList> findAllPublic() {
         return shoppingListRepository.findAllByIsPublic(true);
     }
+
+    public List<ShoppingList> findAllPrivate(User user) {
+        return shoppingListRepository.findAllByIsPublicAndUserId(false,user.getId());
+    }
 }
