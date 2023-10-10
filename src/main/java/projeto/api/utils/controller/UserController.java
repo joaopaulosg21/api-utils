@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import projeto.api.utils.DTO.LoginDTO;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.UserService;
 
@@ -20,5 +21,10 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO loginDTO) {
+        return ResponseEntity.ok(userService.login(loginDTO));
     }
 }

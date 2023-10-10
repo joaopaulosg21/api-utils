@@ -37,4 +37,14 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
         ExceptionResponseDTO response = new ExceptionResponseDTO(status.value(),message,error,path);
         return handleExceptionInternal(ex,response,headers,status,request);
     }
+
+    @ExceptionHandler({LoginException.class})
+    public ResponseEntity<Object> unauthorizedExceptionHandle(RuntimeException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        String message = ex.getMessage();
+        String error = status.name();
+        String path = request.getDescription(true).split("[=;]")[1];
+        ExceptionResponseDTO response = new ExceptionResponseDTO(status.value(),message,error,path);
+        return handleExceptionInternal(ex,response,headers,status,request);
+    }
 }
