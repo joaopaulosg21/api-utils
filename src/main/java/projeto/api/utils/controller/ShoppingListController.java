@@ -38,4 +38,9 @@ public class ShoppingListController {
     public ResponseEntity<ShoppingList> findById(@AuthenticationPrincipal User user, @PathVariable String id) {
         return ResponseEntity.ok(shoppingListService.findById(id,user));
     }
+
+    @GetMapping("find/all")
+    public ResponseEntity<List<ShoppingList>> findALlByUser(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(shoppingListService.findAllByUser(user));
+    }
 }

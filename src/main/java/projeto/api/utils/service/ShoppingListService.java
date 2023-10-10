@@ -31,4 +31,8 @@ public class ShoppingListService {
         return shoppingListRepository.findByIdAndUserId(id,user.getId())
                 .orElseThrow(ShoppingListNotFoundException::new);
     }
+
+    public List<ShoppingList> findAllByUser(User user) {
+        return shoppingListRepository.findAllByUserId(user.getId());
+    }
 }
