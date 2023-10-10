@@ -3,6 +3,7 @@ package projeto.api.utils.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import projeto.api.utils.exceptions.EmailAlreadyUsedException;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.UserRepository;
 
@@ -19,7 +20,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
 
         if(optionalUser.isPresent()) {
-            throw new RuntimeException("Email already in use");
+            throw new EmailAlreadyUsedException();
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
