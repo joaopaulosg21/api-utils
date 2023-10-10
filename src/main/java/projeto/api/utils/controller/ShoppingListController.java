@@ -33,4 +33,9 @@ public class ShoppingListController {
     public ResponseEntity<List<ShoppingList>> findAllPrivate(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(shoppingListService.findAllPrivate(user));
     }
+
+    @GetMapping("find/{id}")
+    public ResponseEntity<ShoppingList> findById(@AuthenticationPrincipal User user, @PathVariable String id) {
+        return ResponseEntity.ok(shoppingListService.findById(id,user));
+    }
 }
