@@ -12,9 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import projeto.api.utils.configuration.auth.CustomRequestFilter;
 import projeto.api.utils.configuration.auth.TokenService;
 import projeto.api.utils.repository.UserRepository;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @Configuration
@@ -33,7 +37,16 @@ public class SecurityConfig {
                     .anyRequest().authenticated();
         })
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors((cors) -> {
+                    CorsConfiguration corsConfig = new CorsConfiguration();
+                    corsConfig.setAllowedOrigins(Arrays.asList("*"));
+                    corsConfig.setMaxAge(8000L);
+                    corsConfig.addAllowedHeader("*");
+                    corsConfig.addAllowedMethod("*");
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                    source.registerCorsConfiguration("/**", corsConfig);
+                    cors.configurationSource(source);
+                })
                 .addFilterBefore(new CustomRequestFilter(tokenService,userRepository), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
