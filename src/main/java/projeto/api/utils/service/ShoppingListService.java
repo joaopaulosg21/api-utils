@@ -6,6 +6,8 @@ import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.ShoppingListRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ShoppingListService {
@@ -16,4 +18,7 @@ public class ShoppingListService {
         return shoppingListRepository.save(shoppingList);
     }
 
+    public List<ShoppingList> findAllPublic() {
+        return shoppingListRepository.findAllByIsPublic(true);
+    }
 }
