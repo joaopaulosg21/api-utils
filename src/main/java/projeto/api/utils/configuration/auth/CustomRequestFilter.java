@@ -1,20 +1,20 @@
 package projeto.api.utils.configuration.auth;
 
+import java.io.IOException;
+import java.util.Objects;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
 import projeto.api.utils.exceptions.LoginException;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.UserRepository;
-
-import java.io.IOException;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 public class CustomRequestFilter extends OncePerRequestFilter {

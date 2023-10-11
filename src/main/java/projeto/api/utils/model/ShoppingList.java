@@ -39,4 +39,12 @@ public class ShoppingList {
     @ManyToOne
     @JoinColumn(columnDefinition = "user_id",referencedColumnName = "id")
     private User user;
+
+    public ShoppingList() {}
+
+    public ShoppingList(String name, List<ItemDTO> items, Boolean isPublic) {
+        this.name = name;
+        this.items = items;
+        this.isPublic = isPublic;
+    }
 }
