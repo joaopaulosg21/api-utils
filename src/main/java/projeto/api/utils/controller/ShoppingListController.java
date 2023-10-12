@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import projeto.api.utils.DTO.DefaultResponseDTO;
 import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.ShoppingListService;
@@ -40,7 +42,12 @@ public class ShoppingListController {
     }
 
     @GetMapping("find/all")
-    public ResponseEntity<List<ShoppingList>> findALlByUser(@AuthenticationPrincipal User user) {
+    public ResponseEntity<List<ShoppingList>> findAllByUser(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(shoppingListService.findAllByUser(user));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<DefaultResponseDTO> deleteById(@AuthenticationPrincipal User user, @PathVariable String id) {
+        return ResponseEntity.ok(shoppingListService.deleteById(id, user));
     }
 }

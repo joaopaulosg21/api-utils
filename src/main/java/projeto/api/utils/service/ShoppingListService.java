@@ -2,6 +2,8 @@ package projeto.api.utils.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import projeto.api.utils.DTO.DefaultResponseDTO;
 import projeto.api.utils.exceptions.ShoppingListNotFoundException;
 import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;
@@ -34,5 +36,12 @@ public class ShoppingListService {
 
     public List<ShoppingList> findAllByUser(User user) {
         return shoppingListRepository.findAllByUserId(user.getId());
+    }
+
+    public DefaultResponseDTO deleteById(String id, User user) {
+        ShoppingList shoppingList = shoppingListRepository.findByIdAndUserId(id, user.getId()).orElseThrow(ShoppingListNotFoundException::new);
+        shoppingListRepository.delete(shoppingList);
+
+        return new DefaultResponseDTO("Shopping list deleted successfully");
     }
 }
