@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import projeto.api.utils.exceptions.DailyTaskNotFoundException;
 import projeto.api.utils.model.DailyTask;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.DailyTaskRepository;
@@ -21,5 +22,11 @@ public class DailyTaskService {
 
     public List<DailyTask> findAll(User user) {
         return dailyTaskRepository.findAllByUserId(user.getId());
+    }
+
+    public DailyTask complete(User user, String taskId) {
+        DailyTask task = dailyTaskRepository.findByIdAndUserId(taskId, user.getId()).orElseThrow(DailyTaskNotFoundException::new);
+        task.setCompleted(true);
+        return task;
     }
 }

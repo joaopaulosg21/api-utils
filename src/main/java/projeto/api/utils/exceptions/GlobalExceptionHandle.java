@@ -48,7 +48,7 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex,response,headers,status,request);
     }
 
-    @ExceptionHandler({ShoppingListNotFoundException.class})
+    @ExceptionHandler({ShoppingListNotFoundException.class,DailyTaskNotFoundException.class})
     public ResponseEntity<Object> notFoundExceptionHandle(RuntimeException ex, WebRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String message = ex.getMessage();
