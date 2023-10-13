@@ -28,4 +28,12 @@ public class DailyTask {
     @ManyToOne
     @JoinColumn(columnDefinition = "user_id",referencedColumnName = "id")
     private User user;
+
+    public DailyTask() {}
+
+    public DailyTask(String description, LocalDateTime time, boolean everyDay) {
+        this.description = description;
+        this.time = time;
+        this.everyDay = everyDay;
+    }
 }
