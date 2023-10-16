@@ -27,6 +27,7 @@ public class DailyTaskService {
     public DailyTask complete(User user, String taskId) {
         DailyTask task = dailyTaskRepository.findByIdAndUserId(taskId, user.getId()).orElseThrow(DailyTaskNotFoundException::new);
         task.setCompleted(true);
+        dailyTaskRepository.save(task);
         return task;
     }
 }
