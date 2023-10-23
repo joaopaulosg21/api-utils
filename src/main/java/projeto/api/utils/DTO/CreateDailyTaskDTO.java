@@ -6,11 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import projeto.api.utils.model.DailyTask;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class CreateDailyTaskDTO{
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateDailyTaskDTO {
         @NotBlank(message = "description cannot be null")
         String description;
 
@@ -23,4 +27,8 @@ public class CreateDailyTaskDTO{
 
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
         LocalDateTime end_date;
+
+        public DailyTask toEntity() {
+                return new DailyTask(description, time, everyDay);
+        }
 }

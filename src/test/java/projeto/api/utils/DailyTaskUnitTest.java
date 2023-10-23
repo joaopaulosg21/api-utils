@@ -38,6 +38,21 @@ public class DailyTaskUnitTest {
     }
 
     @Test
+    public void createDailyTaskTest() {
+        LocalDateTime time = LocalDateTime.now();
+        LocalDateTime end_date = LocalDateTime.now().plusDays(7);
+        CreateDailyTaskDTO createDailyTaskDTO = new CreateDailyTaskDTO("Test description", 
+        time, true, false, end_date);
+        User user = new User("test", "test@email.com", "123");
+        when(dailyTaskRepository.saveAll(anyIterable())).thenReturn(Arrays.asList(createDailyTaskDTO.toEntity()));
+
+        DefaultResponseDTO response = dailyTaskService.create(user, createDailyTaskDTO);
+
+        assertEquals("Task successfully created",response.message());
+
+    }
+
+    @Test
     public void findAllDailyTaskTest() {
         LocalDateTime time = LocalDateTime.of(LocalDate.now(),LocalTime.of(12, 00, 00));
         DailyTask dailyTask = new DailyTask("test description",time,true);
