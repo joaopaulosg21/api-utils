@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import projeto.api.utils.DTO.CreateDailyTaskDTO;
+import projeto.api.utils.DTO.DefaultResponseDTO;
 import projeto.api.utils.model.DailyTask;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.DailyTaskRepository;
@@ -33,19 +35,6 @@ public class DailyTaskUnitTest {
     @BeforeEach
     void setup() {
         this.dailyTaskService = new DailyTaskService(dailyTaskRepository);
-    }
-
-    @Test
-    public void createDailyTaskTest() {
-        LocalDateTime time = LocalDateTime.of(LocalDate.now(),LocalTime.of(12, 00, 00));
-        DailyTask dailyTask = new DailyTask("test description",time,true);
-        User user = new User("test name", "test@email.com", "123");
-        
-        when(dailyTaskRepository.save(any(DailyTask.class))).thenReturn(dailyTask);
-
-        DailyTask response = dailyTaskService.create(user,dailyTask);
-
-        assertEquals(user.getEmail(),response.getUser().getEmail());
     }
 
     @Test

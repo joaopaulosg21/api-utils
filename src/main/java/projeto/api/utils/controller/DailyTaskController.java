@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import projeto.api.utils.DTO.CreateDailyTaskDTO;
+import projeto.api.utils.DTO.DefaultResponseDTO;
 import projeto.api.utils.model.DailyTask;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.DailyTaskService;
@@ -26,7 +28,7 @@ public class DailyTaskController {
     private final DailyTaskService dailyTaskService;
 
     @PostMapping
-    public ResponseEntity<DailyTask> create(@AuthenticationPrincipal User user, @Valid @RequestBody DailyTask dailyTask) {
+    public ResponseEntity<DefaultResponseDTO> create(@AuthenticationPrincipal User user, @Valid @RequestBody CreateDailyTaskDTO dailyTask) {
         return ResponseEntity.status(HttpStatus.CREATED).body(dailyTaskService.create(user,dailyTask));
     }
 

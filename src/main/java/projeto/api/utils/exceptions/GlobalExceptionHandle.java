@@ -28,7 +28,7 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, headers, status, request);
     }
 
-    @ExceptionHandler({EmailAlreadyUsedException.class})
+    @ExceptionHandler({EmailAlreadyUsedException.class, InvalidDateException.class})
     public ResponseEntity<Object> unprocessableEntityHandle(RuntimeException ex, WebRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         String message = ex.getMessage();
