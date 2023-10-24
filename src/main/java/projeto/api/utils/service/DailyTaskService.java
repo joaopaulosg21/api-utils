@@ -57,10 +57,21 @@ public class DailyTaskService {
         return task;
     }
 
-    public List<DailyTask> findAllByDate(User user, String date) {
+    private List<DailyTask> findAllByDate(User user, String date) {
         String[] values = date.split("-");
-        LocalDate localDate = LocalDate.of(Integer.valueOf(values[2]),Integer.valueOf(values[1]),Integer.valueOf(values[0]));
+        LocalDate localDate = LocalDate.of(Integer.parseInt(values[2]),Integer.parseInt(values[1]),Integer.parseInt(values[0]));
         return this.findAll(user)
                 .stream().filter(item -> item.getTime().toLocalDate().isEqual(localDate)).toList();
+    }
+
+    private List<DailyTask> findAllByDescription(User user, String description) {
+        return dailyTaskRepository.findAllByUserIdAndDescription(user.getId(),description);
+    }
+
+    public List<DailyTask> findAllByParam(User user, String date, String description) {
+        if(Objects.isNull(date)) {
+            return this.findAllByDescription(user,description.replaceAll("-"," "));
+        }
+        return this.findAllByDate(user,date);
     }
 }

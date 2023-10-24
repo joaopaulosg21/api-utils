@@ -44,9 +44,9 @@ public class DailyTaskController {
     }
 
     @GetMapping("find")
-    public ResponseEntity<List<DailyTask>> findAllByDate(@AuthenticationPrincipal User user, 
-    @RequestParam(value = "date",required = true) String date) {
-        return ResponseEntity.ok(dailyTaskService.findAllByDate(user,date));
-
+    public ResponseEntity<List<DailyTask>> findAll(@AuthenticationPrincipal User user,
+                                          @RequestParam(value = "date",required = false) String date,
+                                          @RequestParam(value = "description", required = false) String description) {
+        return ResponseEntity.ok(dailyTaskService.findAllByParam(user,date,description));
     }
 }

@@ -13,4 +13,6 @@ public interface DailyTaskRepository extends JpaRepository<DailyTask,String> {
     Optional<DailyTask> findByIdAndUserId(String id, String userId);
 
     List<DailyTask> findAllByUserIdAndTime(String id, LocalDateTime time);
+
+    List<DailyTask> findAllByUserIdAndDescription(String id, String description);
 }
