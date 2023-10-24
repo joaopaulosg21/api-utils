@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
@@ -68,10 +69,17 @@ public class DailyTaskService {
         return dailyTaskRepository.findAllByUserIdAndDescription(user.getId(),description);
     }
 
-    public List<DailyTask> findAllByParam(User user, String date, String description) {
-        if(Objects.isNull(date)) {
-            return this.findAllByDescription(user,description.replaceAll("-"," "));
+    public List<DailyTask> findAllByParam(User user, String... params) {
+        Pattern pattern = Pattern.compile("^[0-9\\\\-]+$");
+        for(String param : params) {
+            if(Objects.nonNull(param)) {
+                if(pattern.matcher(param).find()) {
+                    return this.findAllByDate(user,param);
+                }
+                return this.findAllByDescription(user,param.replaceAll("-"," "));
+            }
         }
-        return this.findAllByDate(user,date);
+
+        throw new RuntimeException("Invalid Param");
     }
 }
