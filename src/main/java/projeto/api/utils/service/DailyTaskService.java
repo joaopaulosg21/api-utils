@@ -1,5 +1,6 @@
 package projeto.api.utils.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import projeto.api.utils.DTO.CreateDailyTaskDTO;
 import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.DTO.FindByDateDTO;
 import projeto.api.utils.exceptions.DailyTaskNotFoundException;
 import projeto.api.utils.exceptions.InvalidDateException;
 import projeto.api.utils.model.DailyTask;
@@ -24,6 +26,7 @@ public class DailyTaskService {
 
         if(Objects.isNull(dailyTask.getEnd_date())) {
             DailyTask task = new DailyTask(dailyTask.getDescription(),dailyTask.getTime(),dailyTask.isEveryDay());
+            task.setUser(user);
             dailyTaskRepository.save(task);
             return new DefaultResponseDTO("Task successfully created");
         }
@@ -53,5 +56,10 @@ public class DailyTaskService {
         task.setCompleted(true);
         dailyTaskRepository.save(task);
         return task;
+    }
+
+    public List<DailyTask> findAllByDate(User user, FindByDateDTO date) {
+        return this.findAll(user)
+                .stream().filter(item -> item.getTime().toLocalDate().isEqual(date.time().toLocalDate())).toList();
     }
 }
