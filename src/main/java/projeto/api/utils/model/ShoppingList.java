@@ -33,7 +33,6 @@ public class ShoppingList {
     @Convert(converter = ItemConverter.class)
     private List<ItemDTO> items;
 
-    @NotNull(message = "isPublic cannot be null")
     private Boolean isPublic;
 
     @ManyToOne
