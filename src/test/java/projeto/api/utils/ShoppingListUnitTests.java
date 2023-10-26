@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 
+import projeto.api.utils.DTO.DefaultResponseDTO;
 import projeto.api.utils.DTO.ItemDTO;
 import projeto.api.utils.exceptions.ShoppingListNotFoundException;
 import projeto.api.utils.model.ShoppingList;
@@ -13,6 +14,9 @@ import projeto.api.utils.model.User;
 import projeto.api.utils.repository.ShoppingListRepository;
 import projeto.api.utils.service.ShoppingListService;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -117,5 +121,22 @@ public class ShoppingListUnitTests {
         List<ShoppingList> response = shoppingListService.findAllByUser(user);
 
         assertEquals(user.getId(),response.get(0).getUser().getId());
+    }
+
+    @Test
+    void deleteByIdTest() {
+        User user = new User("test name", "test@email.com", "123");
+        user.setId("id");
+        List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
+        ShoppingList shoppingList = new ShoppingList("list name",list,false);
+        shoppingList.setId("id");
+        shoppingList.setUser(user);
+        
+        when(shoppingListRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.of(shoppingList));
+
+        DefaultResponseDTO response = shoppingListService.deleteById("id", user);
+
+        assertEquals("Shopping list deleted successfully",response.message());
+
     }
 }
