@@ -2,6 +2,7 @@ package projeto.api.utils.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -24,20 +25,21 @@ public class DailyTaskService {
 
     public DefaultResponseDTO create(User user, CreateDailyTaskDTO dailyTask) {
 
-        if(Objects.isNull(dailyTask.getEnd_date())) {
-            DailyTask task = new DailyTask(dailyTask.getDescription(),dailyTask.getTime(),dailyTask.isEveryDay());
+        if (Objects.isNull(dailyTask.getEnd_date())) {
+            DailyTask task = new DailyTask(dailyTask.getDescription(), dailyTask.getTime(), dailyTask.isEveryDay());
             task.setUser(user);
             dailyTaskRepository.save(task);
             return new DefaultResponseDTO("Task successfully created");
         }
 
-        if(dailyTask.getTime().isAfter(dailyTask.getEnd_date())) {
+        if (dailyTask.getTime().isAfter(dailyTask.getEnd_date())) {
             throw new InvalidDateException();
         }
 
         List<DailyTask> dailyTasks = new ArrayList<>();
-        while(dailyTask.getTime().isBefore(dailyTask.getEnd_date()) || dailyTask.getTime().isEqual(dailyTask.getEnd_date())) {
-            DailyTask task = new DailyTask(dailyTask.getDescription(),dailyTask.getTime(),dailyTask.isEveryDay());
+        while (dailyTask.getTime().isBefore(dailyTask.getEnd_date())
+                || dailyTask.getTime().isEqual(dailyTask.getEnd_date())) {
+            DailyTask task = new DailyTask(dailyTask.getDescription(), dailyTask.getTime(), dailyTask.isEveryDay());
             task.setUser(user);
             dailyTasks.add(task);
             dailyTask.setTime(dailyTask.getTime().plusDays(1));
@@ -48,11 +50,14 @@ public class DailyTaskService {
     }
 
     public List<DailyTask> findAll(User user) {
-        return dailyTaskRepository.findAllByUserId(user.getId());
+        List<DailyTask> list = dailyTaskRepository.findAllByUserId(user.getId());
+        this.sortList(list);
+        return list;
     }
 
     public DailyTask complete(User user, String taskId) {
-        DailyTask task = dailyTaskRepository.findByIdAndUserId(taskId, user.getId()).orElseThrow(DailyTaskNotFoundException::new);
+        DailyTask task = dailyTaskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(DailyTaskNotFoundException::new);
         task.setCompleted(true);
         dailyTaskRepository.save(task);
         return task;
@@ -60,26 +65,39 @@ public class DailyTaskService {
 
     private List<DailyTask> findAllByDate(User user, String date) {
         String[] values = date.split("-");
-        LocalDate localDate = LocalDate.of(Integer.parseInt(values[2]),Integer.parseInt(values[1]),Integer.parseInt(values[0]));
-        return this.findAll(user)
+        LocalDate localDate = LocalDate.of(Integer.parseInt(values[2]), Integer.parseInt(values[1]),
+                Integer.parseInt(values[0]));
+        List<DailyTask> list = this.findAll(user)
                 .stream().filter(item -> item.getTime().toLocalDate().isEqual(localDate)).toList();
+        return list;
     }
 
     private List<DailyTask> findAllByDescription(User user, String description) {
-        return dailyTaskRepository.findAllByUserIdAndDescription(user.getId(),description);
+        List<DailyTask> list = dailyTaskRepository.findAllByUserIdAndDescription(user.getId(), description);
+        this.sortList(list);
+        return list;
     }
 
     public List<DailyTask> findAllByParam(User user, String... params) {
         Pattern pattern = Pattern.compile("^[0-9\\\\-]+$");
-        for(String param : params) {
-            if(Objects.nonNull(param)) {
-                if(pattern.matcher(param).find()) {
-                    return this.findAllByDate(user,param);
+        for (String param : params) {
+            if (Objects.nonNull(param)) {
+                if (pattern.matcher(param).find()) {
+                    return this.findAllByDate(user, param);
                 }
-                return this.findAllByDescription(user,param.replaceAll("-"," "));
+                return this.findAllByDescription(user, param.replaceAll("-", " "));
             }
         }
 
         throw new RuntimeException("Invalid Param");
+    }
+
+    private void sortList(List<DailyTask> list) {
+        Collections.sort(list, (t1, t2) -> {
+            if (t1.getTime().isBefore(t2.getTime())) {
+                return -1;
+            }
+            return 1;
+        });
     }
 }
