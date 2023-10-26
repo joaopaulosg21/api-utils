@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ShoppingListUnitTests {
-    
+
     private ShoppingListService shoppingListService;
 
     @Mock
@@ -42,26 +42,26 @@ public class ShoppingListUnitTests {
     void createShoppingListTest() {
         User user = new User("test name", "test@email.com", "123");
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,true);
+        ShoppingList shoppingList = new ShoppingList("list name", list, true);
 
         when(shoppingListRepository.save(any(ShoppingList.class))).thenReturn(shoppingList);
 
         ShoppingList response = shoppingListService.create(user, shoppingList);
 
-        assertEquals(user.getEmail(),response.getUser().getEmail());
-        assertEquals(list.get(0).name(),response.getItems().get(0).name());
+        assertEquals(user.getEmail(), response.getUser().getEmail());
+        assertEquals(list.get(0).name(), response.getItems().get(0).name());
     }
 
     @Test
     void findAllPublicTest() {
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,true);
-        
+        ShoppingList shoppingList = new ShoppingList("list name", list, true);
+
         when(shoppingListRepository.findAllByIsPublic(true)).thenReturn(Arrays.asList(shoppingList));
 
         List<ShoppingList> response = shoppingListService.findAllPublic();
 
-        assertEquals(shoppingList.getName(),response.get(0).getName());
+        assertEquals(shoppingList.getName(), response.get(0).getName());
         assertTrue(shoppingList.getIsPublic());
     }
 
@@ -70,30 +70,30 @@ public class ShoppingListUnitTests {
         User user = new User("test name", "test@email.com", "123");
         user.setId("id");
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,false);
+        ShoppingList shoppingList = new ShoppingList("list name", list, false);
 
         when(shoppingListRepository.findAllByIsPublicAndUserId(anyBoolean(), anyString()))
-        .thenReturn(Arrays.asList(shoppingList));
+                .thenReturn(Arrays.asList(shoppingList));
 
         List<ShoppingList> response = shoppingListService.findAllPrivate(user);
 
-        assertEquals(shoppingList.getName(),response.get(0).getName());
+        assertEquals(shoppingList.getName(), response.get(0).getName());
         assertFalse(shoppingList.getIsPublic());
     }
-    
+
     @Test
     void findByIdTest() {
         User user = new User("test name", "test@email.com", "123");
         user.setId("id");
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,false);
+        ShoppingList shoppingList = new ShoppingList("list name", list, false);
         shoppingList.setId("list-id");
 
         when(shoppingListRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.of(shoppingList));
-        
+
         ShoppingList response = shoppingListService.findById("list-id", user);
 
-        assertEquals(shoppingList.getId(),response.getId());
+        assertEquals(shoppingList.getId(), response.getId());
     }
 
     @Test
@@ -102,9 +102,10 @@ public class ShoppingListUnitTests {
         user.setId("id");
 
         when(shoppingListRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.empty());
-        
-        ShoppingListNotFoundException exception = assertThrows(ShoppingListNotFoundException.class, () -> shoppingListService.findById("list-id",user));
-        
+
+        ShoppingListNotFoundException exception = assertThrows(ShoppingListNotFoundException.class,
+                () -> shoppingListService.findById("list-id", user));
+
         assertEquals("Shopping list not found", exception.getMessage());
     }
 
@@ -113,14 +114,14 @@ public class ShoppingListUnitTests {
         User user = new User("test name", "test@email.com", "123");
         user.setId("id");
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,false);
+        ShoppingList shoppingList = new ShoppingList("list name", list, false);
         shoppingList.setUser(user);
-        
+
         when(shoppingListRepository.findAllByUserId(anyString())).thenReturn(Arrays.asList(shoppingList));
 
         List<ShoppingList> response = shoppingListService.findAllByUser(user);
 
-        assertEquals(user.getId(),response.get(0).getUser().getId());
+        assertEquals(user.getId(), response.get(0).getUser().getId());
     }
 
     @Test
@@ -128,15 +129,27 @@ public class ShoppingListUnitTests {
         User user = new User("test name", "test@email.com", "123");
         user.setId("id");
         List<ItemDTO> list = Arrays.asList(new ItemDTO("Item 01", "10"));
-        ShoppingList shoppingList = new ShoppingList("list name",list,false);
+        ShoppingList shoppingList = new ShoppingList("list name", list, false);
         shoppingList.setId("id");
         shoppingList.setUser(user);
-        
+
         when(shoppingListRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.of(shoppingList));
 
         DefaultResponseDTO response = shoppingListService.deleteById("id", user);
 
-        assertEquals("Shopping list deleted successfully",response.message());
+        assertEquals("Shopping list deleted successfully", response.message());
 
+    }
+
+    @Test
+    void deleteByIdExceptionTest() {
+        User user = new User("test name", "test@email.com", "123");
+        user.setId("id");
+
+        when(shoppingListRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.empty());
+
+        ShoppingListNotFoundException exception = assertThrows(ShoppingListNotFoundException.class, () -> shoppingListService.deleteById("id", user));
+
+        assertEquals("Shopping list not found",exception.getMessage());
     }
 }
