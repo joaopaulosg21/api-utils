@@ -29,4 +29,11 @@ public class Note {
     @ManyToOne
     @JoinColumn(columnDefinition = "user_id",referencedColumnName = "id")
     private User user;
+
+    public Note() {}
+
+    public Note(String description, LocalDateTime createdAt) {
+        this.description = description;
+        this.createdAt = createdAt;
+    }
 }
