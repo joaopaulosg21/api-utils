@@ -2,9 +2,13 @@ package projeto.api.utils.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,4 +29,8 @@ public class NoteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(noteService.create(note,user));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Note>> findAll(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(noteService.findAll(user));
+    }
 }
