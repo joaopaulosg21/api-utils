@@ -6,8 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import projeto.api.utils.DTO.LoginDTO;
-import projeto.api.utils.DTO.TokenResponseDTO;
+
+import projeto.api.utils.dto.LoginDTO;
+import projeto.api.utils.dto.TokenResponseDTO;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.UserService;
 

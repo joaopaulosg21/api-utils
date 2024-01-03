@@ -3,7 +3,7 @@ package projeto.api.utils.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.exceptions.ShoppingListNotFoundException;
 import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;

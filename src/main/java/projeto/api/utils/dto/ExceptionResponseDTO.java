@@ -1,4 +1,4 @@
-package projeto.api.utils.DTO;
+package projeto.api.utils.dto;
 
 public record ExceptionResponseDTO(int status, String message, String error, String path) {
 }

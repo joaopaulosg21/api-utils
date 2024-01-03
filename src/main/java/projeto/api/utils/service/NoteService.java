@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.Note;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.NoteRepository;

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.Note;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.NoteService;

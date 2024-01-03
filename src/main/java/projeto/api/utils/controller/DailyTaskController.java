@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import projeto.api.utils.DTO.CreateDailyTaskDTO;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.dto.CreateDailyTaskDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.DailyTask;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.DailyTaskService;

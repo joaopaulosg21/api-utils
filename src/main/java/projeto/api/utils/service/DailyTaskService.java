@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import projeto.api.utils.DTO.CreateDailyTaskDTO;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.dto.CreateDailyTaskDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.exceptions.DailyTaskNotFoundException;
 import projeto.api.utils.exceptions.InvalidDateException;
 import projeto.api.utils.model.DailyTask;

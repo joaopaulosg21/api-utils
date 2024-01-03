@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;
 import projeto.api.utils.service.ShoppingListService;

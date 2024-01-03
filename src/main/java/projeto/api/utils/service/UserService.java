@@ -6,9 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import projeto.api.utils.DTO.LoginDTO;
-import projeto.api.utils.DTO.TokenResponseDTO;
+
 import projeto.api.utils.configuration.auth.TokenService;
+import projeto.api.utils.dto.LoginDTO;
+import projeto.api.utils.dto.TokenResponseDTO;
 import projeto.api.utils.exceptions.EmailAlreadyUsedException;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.UserRepository;

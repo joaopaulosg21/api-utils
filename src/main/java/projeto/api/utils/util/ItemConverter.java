@@ -3,7 +3,7 @@ package projeto.api.utils.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
-import projeto.api.utils.DTO.ItemDTO;
+import projeto.api.utils.dto.ItemDTO;
 
 public class ItemConverter implements AttributeConverter<ItemDTO, String> {
     private static final ObjectMapper mapper = new ObjectMapper();

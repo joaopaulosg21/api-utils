@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.Note;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.NoteRepository;

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import projeto.api.utils.DTO.CreateDailyTaskDTO;
-import projeto.api.utils.DTO.DefaultResponseDTO;
+import projeto.api.utils.dto.CreateDailyTaskDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
 import projeto.api.utils.model.DailyTask;
 import projeto.api.utils.model.User;
 import projeto.api.utils.repository.DailyTaskRepository;

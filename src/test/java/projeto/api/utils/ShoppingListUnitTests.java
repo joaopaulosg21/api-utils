@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 
-import projeto.api.utils.DTO.DefaultResponseDTO;
-import projeto.api.utils.DTO.ItemDTO;
+import projeto.api.utils.dto.DefaultResponseDTO;
+import projeto.api.utils.dto.ItemDTO;
 import projeto.api.utils.exceptions.ShoppingListNotFoundException;
 import projeto.api.utils.model.ShoppingList;
 import projeto.api.utils.model.User;

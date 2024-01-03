@@ -7,7 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import projeto.api.utils.DTO.ItemDTO;
+
+import projeto.api.utils.dto.ItemDTO;
 import projeto.api.utils.util.ItemConverter;
 
 import java.time.LocalDate;
