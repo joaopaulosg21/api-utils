@@ -22,8 +22,8 @@ public class ShoppingListController {
 
     @PostMapping()
     public ResponseEntity<ShoppingList> create(@AuthenticationPrincipal User user,
-                                               @Valid @RequestBody ShoppingList shoppingList) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(shoppingListService.create(user,shoppingList));
+            @Valid @RequestBody ShoppingList shoppingList) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(shoppingListService.create(user, shoppingList));
     }
 
     @GetMapping("find/public")
@@ -38,7 +38,7 @@ public class ShoppingListController {
 
     @GetMapping("find/{id}")
     public ResponseEntity<ShoppingList> findById(@AuthenticationPrincipal User user, @PathVariable String id) {
-        return ResponseEntity.ok(shoppingListService.findById(id,user));
+        return ResponseEntity.ok(shoppingListService.findById(id, user));
     }
 
     @GetMapping("find/all")

@@ -2,7 +2,6 @@ package projeto.api.utils.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -50,8 +49,7 @@ public class DailyTaskService {
     }
 
     public List<DailyTask> findAll(User user) {
-        List<DailyTask> list = dailyTaskRepository.findAllByUserId(user.getId());
-        this.sortList(list);
+        List<DailyTask> list = dailyTaskRepository.findAllByUserIdOrderByTimeAsc(user.getId());
         return list;
     }
 
@@ -73,8 +71,7 @@ public class DailyTaskService {
     }
 
     private List<DailyTask> findAllByDescription(User user, String description) {
-        List<DailyTask> list = dailyTaskRepository.findAllByUserIdAndDescription(user.getId(), description);
-        this.sortList(list);
+        List<DailyTask> list = dailyTaskRepository.findAllByUserIdAndDescriptionOrderByTimeAsc(user.getId(), description);
         return list;
     }
 
@@ -90,14 +87,5 @@ public class DailyTaskService {
         }
 
         throw new RuntimeException("Invalid Param");
-    }
-
-    private void sortList(List<DailyTask> list) {
-        Collections.sort(list, (t1, t2) -> {
-            if (t1.getTime().isBefore(t2.getTime())) {
-                return -1;
-            }
-            return 1;
-        });
     }
 }

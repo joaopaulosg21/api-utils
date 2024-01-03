@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DailyTaskRepository extends JpaRepository<DailyTask,String> {
-    List<DailyTask> findAllByUserId(String userId);
+    List<DailyTask> findAllByUserIdOrderByTimeAsc(String userId);
 
     Optional<DailyTask> findByIdAndUserId(String id, String userId);
 
     List<DailyTask> findAllByUserIdAndTime(String id, LocalDateTime time);
 
-    List<DailyTask> findAllByUserIdAndDescription(String id, String description);
+    List<DailyTask> findAllByUserIdAndDescriptionOrderByTimeAsc(String id, String description);
 }

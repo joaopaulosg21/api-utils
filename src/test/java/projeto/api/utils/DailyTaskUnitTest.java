@@ -61,7 +61,7 @@ public class DailyTaskUnitTest {
         dailyTask.setUser(user);
         List<DailyTask> allTasks = Arrays.asList(dailyTask);
 
-        when(dailyTaskRepository.findAllByUserId(user.getId())).thenReturn(allTasks);
+        when(dailyTaskRepository.findAllByUserIdOrderByTimeAsc(user.getId())).thenReturn(allTasks);
 
         List<DailyTask> response = dailyTaskService.findAll(user);
 
