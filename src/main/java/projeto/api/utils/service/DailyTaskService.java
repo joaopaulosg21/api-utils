@@ -49,30 +49,26 @@ public class DailyTaskService {
     }
 
     public List<DailyTask> findAll(User user) {
-        List<DailyTask> list = dailyTaskRepository.findAllByUserIdOrderByTimeAsc(user.getId());
-        return list;
+        return dailyTaskRepository.findAllByUserIdOrderByTimeAsc(user.getId());
     }
 
     public DailyTask complete(User user, String taskId) {
         DailyTask task = dailyTaskRepository.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(DailyTaskNotFoundException::new);
         task.setCompleted(true);
-        dailyTaskRepository.save(task);
-        return task;
+        return dailyTaskRepository.save(task);
     }
 
     private List<DailyTask> findAllByDate(User user, String date) {
         String[] values = date.split("-");
         LocalDate localDate = LocalDate.of(Integer.parseInt(values[2]), Integer.parseInt(values[1]),
                 Integer.parseInt(values[0]));
-        List<DailyTask> list = this.findAll(user)
+        return this.findAll(user)
                 .stream().filter(item -> item.getTime().toLocalDate().isEqual(localDate)).toList();
-        return list;
     }
 
     private List<DailyTask> findAllByDescription(User user, String description) {
-        List<DailyTask> list = dailyTaskRepository.findAllByUserIdAndDescriptionOrderByTimeAsc(user.getId(), description);
-        return list;
+        return dailyTaskRepository.findAllByUserIdAndDescriptionOrderByTimeAsc(user.getId(), description);
     }
 
     public List<DailyTask> findAllByParam(User user, String... params) {
