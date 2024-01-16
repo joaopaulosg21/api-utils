@@ -78,6 +78,7 @@ public class DailyTaskUnitTest {
         dailyTask.setUser(user);
 
         when(dailyTaskRepository.findByIdAndUserId(anyString(), anyString())).thenReturn(Optional.of(dailyTask));
+        when(dailyTaskRepository.save(any(DailyTask.class))).thenReturn(dailyTask);
         
         DailyTask response = dailyTaskService.complete(user, "daily-id");
 
